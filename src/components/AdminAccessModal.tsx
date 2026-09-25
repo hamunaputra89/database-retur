@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Unlock, KeyRound, ShieldAlert, Check, X, ShieldCheck, Upload, Database } from 'lucide-react';
+import { Lock, Unlock, KeyRound, ShieldAlert, Check, X, ShieldCheck, Upload, Database, Trash2 } from 'lucide-react';
 
 interface AdminAccessModalProps {
   isOpen: boolean;
@@ -8,6 +8,8 @@ interface AdminAccessModalProps {
   onLogin: () => void;
   onLogout: () => void;
   onOpenUpdateModal?: () => void;
+  onClearAllData?: () => void;
+  totalRecords?: number;
 }
 
 const DEFAULT_PIN = '1234';
@@ -20,6 +22,8 @@ export const AdminAccessModal: React.FC<AdminAccessModalProps> = ({
   onLogin,
   onLogout,
   onOpenUpdateModal,
+  onClearAllData,
+  totalRecords = 0,
 }) => {
   const [pinInput, setPinInput] = useState('');
   const [errorMsg, setErrorMsg] = useState('');
@@ -88,17 +92,21 @@ export const AdminAccessModal: React.FC<AdminAccessModalProps> = ({
         className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-slate-200 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+        {/* Header with Colorful Gradient */}
+        <div className={`px-6 py-4 border-b flex items-center justify-between text-white ${
+          isAdmin
+            ? 'bg-gradient-to-r from-emerald-600 via-teal-600 to-emerald-700 border-emerald-500/50'
+            : 'bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-800 border-indigo-500/50'
+        }`}>
           <div className="flex items-center gap-2.5">
-            <div className={`p-2 rounded-xl ${isAdmin ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-700'}`}>
-              {isAdmin ? <ShieldCheck className="w-5 h-5 text-emerald-600" /> : <Lock className="w-5 h-5" />}
+            <div className="p-2 rounded-xl bg-white/20 backdrop-blur-xs text-white shadow-xs">
+              {isAdmin ? <ShieldCheck className="w-5 h-5 text-emerald-200" /> : <Lock className="w-5 h-5 text-cyan-200" />}
             </div>
             <div>
-              <h3 className="text-base font-bold text-slate-900">
+              <h3 className="text-base font-extrabold text-white">
                 {isAdmin ? 'Menu Akses Pengelola' : 'Akses Khusus Pengelola'}
               </h3>
-              <p className="text-xs text-slate-500">
+              <p className="text-xs text-white/80 font-medium">
                 {isAdmin ? 'Pusat kontrol pembaruan database & pengaturan sistem' : 'Masukkan PIN untuk mengakses menu Update Data & Pengelola'}
               </p>
             </div>
@@ -106,7 +114,7 @@ export const AdminAccessModal: React.FC<AdminAccessModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors cursor-pointer"
+            className="p-1 rounded-lg text-white/80 hover:text-white hover:bg-white/20 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -159,25 +167,47 @@ export const AdminAccessModal: React.FC<AdminAccessModalProps> = ({
               </div>
 
               {!isChangingPin ? (
-                <div className="pt-2 flex flex-col sm:flex-row gap-2">
-                  <button
-                    type="button"
-                    onClick={() => setIsChangingPin(true)}
-                    className="flex-1 py-2 px-3 text-xs font-semibold rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 transition-colors cursor-pointer"
-                  >
-                    Ganti PIN Akses
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      onLogout();
-                      onClose();
-                    }}
-                    className="flex-1 py-2 px-3 text-xs font-semibold rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 transition-colors cursor-pointer"
-                  >
-                    Kunci & Keluar Pengelola
-                  </button>
-                </div>
+                <>
+                  <div className="pt-2 flex flex-col sm:flex-row gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setIsChangingPin(true)}
+                      className="flex-1 py-2 px-3 text-xs font-semibold rounded-lg border border-slate-200 hover:bg-slate-50 text-slate-700 transition-colors cursor-pointer"
+                    >
+                      Ganti PIN Akses
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        onLogout();
+                        onClose();
+                      }}
+                      className="flex-1 py-2 px-3 text-xs font-semibold rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-colors cursor-pointer"
+                    >
+                      Kunci Akses
+                    </button>
+                  </div>
+
+                  {onClearAllData && totalRecords > 0 && (
+                    <div className="pt-3 border-t border-slate-100 flex items-center justify-between">
+                      <span className="text-xs text-slate-400">
+                        {totalRecords.toLocaleString('id-ID')} rekaman database
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          if (confirm('PERINGATAN: Yakin ingin MENGHAPUS SEMUA DATA di database? Semua catatan dan nomor resi akan dikosongkan.')) {
+                            onClearAllData();
+                          }
+                        }}
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                        <span>Hapus Semua Data</span>
+                      </button>
+                    </div>
+                  )}
+                </>
               ) : (
                 <form onSubmit={handleChangePin} className="space-y-3 pt-2 border-t border-slate-100">
                   <h4 className="text-xs font-bold text-slate-800">Ubah PIN Pengelola</h4>

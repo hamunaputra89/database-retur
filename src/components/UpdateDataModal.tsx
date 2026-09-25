@@ -508,20 +508,20 @@ export const UpdateDataModal: React.FC<UpdateDataModalProps> = ({
         className="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        {/* Header with Vibrant Gradient */}
+        <div className="px-6 py-4 bg-gradient-to-r from-emerald-600 via-teal-600 to-indigo-700 text-white flex items-center justify-between border-b border-emerald-500/40">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-xs text-white flex items-center justify-center shadow-md">
               <Database className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
+              <h3 className="text-base font-extrabold text-white flex items-center gap-2">
                 <span>Perbarui / Sinkronisasi Database Resi</span>
-                <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-emerald-300 border border-slate-700">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-white/20 text-white border border-white/30">
                   {currentRecords.length} Data Saat Ini
                 </span>
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-emerald-100/90 font-medium">
                 Impor dari link Google Sheets, upload file CSV, tempel data tabel, atau tambah data baru
               </p>
             </div>
@@ -529,7 +529,7 @@ export const UpdateDataModal: React.FC<UpdateDataModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-white/80 hover:text-white hover:bg-white/20 transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -977,16 +977,16 @@ export const UpdateDataModal: React.FC<UpdateDataModalProps> = ({
               <button
                 type="button"
                 onClick={() => {
-                  if (confirm('Yakin ingin mereset database kembali ke 1.187 data bawaan awal?')) {
+                  if (confirm('Yakin ingin MENGHAPUS SEMUA DATA di database? Seluruh data resi akan dikosongkan.')) {
                     onResetDefault();
                     onClose();
                   }
                 }}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 text-rose-600 hover:text-rose-700 hover:bg-rose-50 rounded-lg font-medium transition-colors cursor-pointer"
-                title="Kembalikan database ke data bawaan awal"
+                title="Hapus dan kosongkan seluruh isi database"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
-                <span>Reset ke Data Awal</span>
+                <span>Kosongkan Seluruh Data</span>
               </button>
             </div>
 

@@ -127,47 +127,47 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
   return (
     <div
       id={`record-card-${record.id}`}
-      className={`bg-white rounded-xl border transition-all duration-200 shadow-sm hover:shadow-md ${
-        isFirst ? 'border-blue-300 ring-1 ring-blue-100' : 'border-slate-200'
+      className={`bg-white rounded-2xl border transition-all duration-200 shadow-sm hover:shadow-lg overflow-hidden ${
+        isFirst ? 'border-indigo-400 ring-2 ring-indigo-200/60' : 'border-slate-200/90'
       }`}
     >
-      {/* Top Banner / Header */}
-      <div className="p-4 sm:p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-slate-50/70 rounded-t-xl">
+      {/* Top Banner / Header with Vibrant Gradient */}
+      <div className="p-4 sm:p-5 border-b border-indigo-600/60 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-800 text-white shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+          <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-indigo-500 text-white flex items-center justify-center font-bold shadow-md shadow-cyan-500/30 shrink-0">
             <Package className="w-5 h-5" />
           </div>
           <div>
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
-                Resi Original
+              <span className="text-xs font-extrabold uppercase tracking-wider text-cyan-200">
+                Resi Original:
               </span>
               {record.resiOriginal && record.resiOriginal !== 'Tidak ditemukan' ? (
                 <div className="flex items-center gap-1.5">
-                  <span className="text-lg font-mono font-bold text-slate-900">
+                  <span className="text-lg font-mono font-extrabold text-white tracking-wide">
                     {record.resiOriginal}
                   </span>
                   <button
                     type="button"
                     onClick={() => copyToClipboard(record.resiOriginal, 'original')}
-                    className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
+                    className="p-1 rounded-md text-cyan-200 hover:text-white hover:bg-white/20 transition-colors cursor-pointer"
                     title="Salin Resi Original"
                   >
                     {copiedKey === 'original' ? (
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
+                      <Check className="w-3.5 h-3.5 text-emerald-300" />
                     ) : (
                       <Copy className="w-3.5 h-3.5" />
                     )}
                   </button>
                 </div>
               ) : (
-                <span className="text-sm font-mono text-slate-400 italic">
+                <span className="text-sm font-mono text-cyan-200/70 italic">
                   Tidak ditemukan
                 </span>
               )}
 
               {matchedField && (
-                <span className="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-medium bg-blue-100 text-blue-800">
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-gradient-to-r from-cyan-400 to-teal-400 text-slate-950 shadow-sm">
                   Cocok di {matchedField}
                 </span>
               )}
@@ -175,27 +175,27 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
 
             {/* Sub Resi Retur */}
             <div className="flex items-center gap-2 mt-0.5 flex-wrap">
-              <span className="text-xs font-medium text-slate-500">Resi Retur:</span>
+              <span className="text-xs font-semibold text-emerald-200">Resi Retur:</span>
               {record.resiRetur ? (
-                <div className="flex items-center gap-1">
-                  <span className="text-sm font-mono font-semibold text-slate-700">
+                <div className="flex items-center gap-1 bg-emerald-500/25 border border-emerald-300/40 px-2 py-0.5 rounded-lg">
+                  <span className="text-xs font-mono font-bold text-emerald-100">
                     {record.resiRetur}
                   </span>
                   <button
                     type="button"
                     onClick={() => copyToClipboard(record.resiRetur, 'retur')}
-                    className="p-1 rounded text-slate-400 hover:text-slate-700 hover:bg-slate-200/60 transition-colors"
+                    className="p-0.5 rounded text-emerald-300 hover:text-white hover:bg-emerald-500/30 transition-colors cursor-pointer"
                     title="Salin Resi Retur"
                   >
                     {copiedKey === 'retur' ? (
-                      <Check className="w-3 h-3 text-emerald-600" />
+                      <Check className="w-3 h-3 text-emerald-200" />
                     ) : (
                       <Copy className="w-3 h-3" />
                     )}
                   </button>
                 </div>
               ) : (
-                <span className="text-xs text-slate-400 italic">Tidak ada resi retur</span>
+                <span className="text-xs text-blue-200/70 italic">Tidak ada resi retur</span>
               )}
             </div>
           </div>
@@ -205,14 +205,16 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
         <div className="flex items-center gap-2 self-end sm:self-auto flex-wrap">
           {record.status && (
             <span
-              className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold ${
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-extrabold uppercase tracking-wider shadow-md ${
                 record.status.toLowerCase() === 'done'
-                  ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
-                  : 'bg-slate-100 text-slate-700'
+                  ? 'bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 shadow-emerald-500/30'
+                  : record.status.toLowerCase().includes('reject')
+                  ? 'bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-rose-500/30'
+                  : 'bg-gradient-to-r from-amber-400 to-orange-400 text-slate-950 shadow-amber-500/30'
               }`}
             >
-              <CheckCircle2 className="w-3.5 h-3.5" />
-              {record.status.toUpperCase()}
+              <CheckCircle2 className="w-3.5 h-3.5 stroke-[2.5]" />
+              <span>{record.status}</span>
             </span>
           )}
 
@@ -224,10 +226,10 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
                 setEditFormData({ ...record });
                 setIsEditModalOpen(true);
               }}
-              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors shadow-2xs"
+              className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-xl border border-white/30 bg-white/15 hover:bg-white/25 text-xs font-bold text-white transition-all shadow-sm cursor-pointer"
               title="Edit data resi ini"
             >
-              <Edit3 className="w-3.5 h-3.5 text-blue-600" />
+              <Edit3 className="w-3.5 h-3.5 text-cyan-200" />
               <span>Edit</span>
             </button>
           )}
@@ -235,17 +237,17 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
           <button
             type="button"
             onClick={handleCopySummary}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-xs font-medium text-slate-700 transition-colors shadow-2xs"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-white/30 bg-white/15 hover:bg-white/25 text-xs font-bold text-white transition-all shadow-sm cursor-pointer"
             title="Salin seluruh data rekaman ini"
           >
             {copiedSummary ? (
               <>
-                <Check className="w-3.5 h-3.5 text-emerald-600" />
-                <span className="text-emerald-700">Tersalin!</span>
+                <Check className="w-3.5 h-3.5 text-emerald-300" />
+                <span className="text-emerald-300 font-extrabold">Tersalin!</span>
               </>
             ) : (
               <>
-                <Share2 className="w-3.5 h-3.5 text-slate-500" />
+                <Share2 className="w-3.5 h-3.5 text-cyan-200" />
                 <span>Salin Ringkasan</span>
               </>
             )}
@@ -254,27 +256,25 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
       </div>
 
       {/* Main Content Grid */}
-      <div className="p-4 sm:p-5 space-y-5">
+      <div className="p-4 sm:p-5 space-y-5 bg-gradient-to-b from-white via-indigo-50/15 to-white">
         {/* Highlight Alert for Update Case if issue detected */}
         {record.updateCase && (
           <div
-            className={`p-3.5 rounded-lg flex items-start gap-3 border ${
+            className={`p-4 rounded-2xl flex items-start gap-3 border-2 shadow-sm ${
               hasIssue
-                ? 'bg-amber-50/80 border-amber-200 text-amber-900'
-                : 'bg-blue-50/60 border-blue-200 text-blue-900'
+                ? 'bg-gradient-to-r from-amber-50 via-rose-50/60 to-orange-50 border-amber-400 text-amber-950'
+                : 'bg-gradient-to-r from-blue-50 via-cyan-50/60 to-indigo-50 border-blue-400 text-blue-950'
             }`}
           >
-            <div className="mt-0.5 shrink-0">
-              <AlertTriangle
-                className={`w-4 h-4 ${hasIssue ? 'text-amber-600' : 'text-blue-600'}`}
-              />
+            <div className={`p-1.5 rounded-xl mt-0.5 shrink-0 ${hasIssue ? 'bg-amber-500 text-white shadow-xs' : 'bg-blue-600 text-white shadow-xs'}`}>
+              <AlertTriangle className="w-4 h-4" />
             </div>
             <div className="flex-1 text-sm">
-              <span className="font-semibold mr-1.5">Kasus / Update:</span>
-              <span className="font-medium">{record.updateCase}</span>
+              <span className="font-extrabold mr-1.5 text-slate-900">Kasus / Update:</span>
+              <span className={`font-bold ${hasIssue ? 'text-amber-950' : 'text-blue-950'}`}>{record.updateCase}</span>
               {record.keterangan && (
-                <div className="mt-1 text-xs opacity-90">
-                  <span className="font-semibold">Keterangan Tambahan:</span> {record.keterangan}
+                <div className="mt-1 text-xs opacity-95 text-slate-700">
+                  <span className="font-bold">Keterangan Tambahan:</span> {record.keterangan}
                 </div>
               )}
             </div>
@@ -283,22 +283,25 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
 
         {/* Section 1: Item & Logistical Details */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5">
-            Informasi Unit & Logistik
-          </h4>
+          <div className="flex items-center gap-2 mb-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-xs shadow-blue-400" />
+            <h4 className="text-xs font-extrabold text-blue-950 uppercase tracking-wider">
+              Informasi Unit & Logistik
+            </h4>
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {/* DN */}
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-              <div className="text-[11px] font-medium text-slate-500">Nomor DN</div>
-              <div className="flex items-center justify-between mt-0.5">
-                <span className="font-mono text-sm font-semibold text-slate-800 break-all">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-sky-50 via-blue-50 to-indigo-50/50 border-2 border-sky-200/90 hover:border-sky-400 transition-colors shadow-2xs">
+              <div className="text-[11px] font-extrabold text-sky-900">Nomor DN</div>
+              <div className="flex items-center justify-between mt-1">
+                <span className="font-mono text-sm font-bold text-slate-900 break-all">
                   {record.dn || '-'}
                 </span>
                 {record.dn && record.dn !== 'Tidak ditemukan' && (
                   <button
                     type="button"
                     onClick={() => copyToClipboard(record.dn, 'dn')}
-                    className="text-slate-400 hover:text-slate-700 ml-1 shrink-0"
+                    className="p-1 rounded-md text-sky-600 hover:text-sky-900 hover:bg-sky-100 transition-colors shrink-0 cursor-pointer"
                     title="Salin DN"
                   >
                     {copiedKey === 'dn' ? (
@@ -312,17 +315,17 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
             </div>
 
             {/* SKU */}
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-              <div className="text-[11px] font-medium text-slate-500">SKU Barang</div>
-              <div className="flex items-center justify-between mt-0.5">
-                <span className="font-mono text-xs sm:text-sm font-semibold text-slate-800 break-all">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-violet-50 via-purple-50 to-fuchsia-50/50 border-2 border-violet-200/90 hover:border-violet-400 transition-colors shadow-2xs">
+              <div className="text-[11px] font-extrabold text-purple-900">SKU Barang</div>
+              <div className="flex items-center justify-between mt-1">
+                <span className="font-mono text-xs sm:text-sm font-bold text-slate-900 break-all">
                   {record.sku || '-'}
                 </span>
                 {record.sku && record.sku !== 'Tidak ditemukan' && (
                   <button
                     type="button"
                     onClick={() => copyToClipboard(record.sku, 'sku')}
-                    className="text-slate-400 hover:text-slate-700 ml-1 shrink-0"
+                    className="p-1 rounded-md text-purple-600 hover:text-purple-900 hover:bg-purple-100 transition-colors shrink-0 cursor-pointer"
                     title="Salin SKU"
                   >
                     {copiedKey === 'sku' ? (
@@ -336,17 +339,17 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
             </div>
 
             {/* IMEI */}
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-              <div className="text-[11px] font-medium text-slate-500">IMEI / SN</div>
-              <div className="flex items-center justify-between mt-0.5">
-                <span className="font-mono text-xs sm:text-sm font-semibold text-slate-800 break-all">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-pink-50 via-rose-50 to-purple-50/50 border-2 border-pink-200/90 hover:border-pink-400 transition-colors shadow-2xs">
+              <div className="text-[11px] font-extrabold text-pink-900">IMEI / SN</div>
+              <div className="flex items-center justify-between mt-1">
+                <span className="font-mono text-xs sm:text-sm font-bold text-slate-900 break-all">
                   {record.imei || '-'}
                 </span>
                 {record.imei && record.imei !== 'Tidak ditemukan' && (
                   <button
                     type="button"
                     onClick={() => copyToClipboard(record.imei, 'imei')}
-                    className="text-slate-400 hover:text-slate-700 ml-1 shrink-0"
+                    className="p-1 rounded-md text-pink-600 hover:text-pink-900 hover:bg-pink-100 transition-colors shrink-0 cursor-pointer"
                     title="Salin IMEI"
                   >
                     {copiedKey === 'imei' ? (
@@ -360,9 +363,9 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
             </div>
 
             {/* Sloc */}
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-              <div className="text-[11px] font-medium text-slate-500">Sloc (Lokasi)</div>
-              <div className="mt-0.5 font-mono text-sm font-semibold text-slate-800">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50/50 border-2 border-emerald-200/90 hover:border-emerald-400 transition-colors shadow-2xs">
+              <div className="text-[11px] font-extrabold text-teal-900">Sloc (Lokasi)</div>
+              <div className="mt-1 font-mono text-sm font-bold text-slate-900">
                 {record.sloc || '-'}
               </div>
             </div>
@@ -371,43 +374,46 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
 
         {/* Section 2: Handover & Sanggahan */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5">
-            Dokumen Handover & Sanggahan
-          </h4>
+          <div className="flex items-center gap-2 mb-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-xs shadow-indigo-400" />
+            <h4 className="text-xs font-extrabold text-indigo-950 uppercase tracking-wider">
+              Dokumen Handover & Sanggahan
+            </h4>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {/* Doc Handover */}
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-              <div className="text-[11px] font-medium text-slate-500">Doc Handover</div>
-              <div className="mt-0.5 font-mono text-xs font-semibold text-slate-800 break-all">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-slate-50 via-indigo-50/30 to-blue-50/20 border border-indigo-200/90 shadow-2xs">
+              <div className="text-[11px] font-bold text-indigo-900">Doc Handover</div>
+              <div className="mt-1 font-mono text-xs font-bold text-slate-800 break-all">
                 {record.docHandover || '-'}
               </div>
             </div>
 
             {/* NO HO */}
-            <div className="p-2.5 rounded-lg bg-slate-50 border border-slate-100">
-              <div className="text-[11px] font-medium text-slate-500">No. HO / Urut</div>
-              <div className="mt-0.5 font-mono text-sm font-semibold text-slate-800">
+            <div className="p-3 rounded-xl bg-gradient-to-br from-slate-50 via-cyan-50/30 to-blue-50/20 border border-cyan-200/90 shadow-2xs">
+              <div className="text-[11px] font-bold text-cyan-900">No. HO / Urut</div>
+              <div className="mt-1 font-mono text-sm font-bold text-slate-800">
                 {record.noHo || '-'}
               </div>
             </div>
 
             {/* Doc Sanggahan - FULLY CLICKABLE! */}
             <div
-              className={`p-2.5 rounded-lg border transition-all ${
+              className={`p-3 rounded-xl border-2 transition-all ${
                 hasDocSanggahan
-                  ? 'bg-blue-50/60 border-blue-200/90 shadow-2xs'
-                  : 'bg-slate-50 border-slate-100'
+                  ? 'bg-gradient-to-br from-cyan-50 via-blue-50 to-teal-50/60 border-cyan-300 shadow-sm'
+                  : 'bg-slate-50 border-slate-200'
               }`}
             >
               <div className="text-[11px] font-semibold text-slate-700 flex items-center justify-between">
                 <div className="flex items-center gap-1.5">
                   <FileText className="w-3.5 h-3.5 text-blue-600" />
-                  <span className={hasDocSanggahan ? 'text-blue-900 font-bold' : 'text-slate-500'}>
+                  <span className={hasDocSanggahan ? 'text-blue-900 font-extrabold' : 'text-slate-500'}>
                     Doc Sanggahan
                   </span>
                 </div>
                 {hasDocSanggahan && (
-                  <span className="text-[10px] font-bold text-blue-700 bg-blue-100/90 px-1.5 py-0.5 rounded flex items-center gap-1">
+                  <span className="text-[10px] font-extrabold text-blue-800 bg-blue-100/90 px-2 py-0.5 rounded-full flex items-center gap-1 shadow-2xs">
                     {isDocUrl ? (
                       <>
                         <ExternalLink className="w-2.5 h-2.5" />
@@ -425,7 +431,7 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
                 )}
               </div>
 
-              <div className="mt-1.5">
+              <div className="mt-2">
                 {hasDocSanggahan ? (
                   <div className="space-y-1.5">
                     {isDocUrl ? (
@@ -435,10 +441,10 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
                           href={docSanggahanVal}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="w-full text-left p-2 rounded-md bg-white border border-blue-200 hover:border-blue-400 hover:bg-blue-50/80 transition-all group flex items-start gap-2 shadow-2xs cursor-pointer block"
+                          className="w-full text-left p-2.5 rounded-xl bg-white border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50/80 transition-all group flex items-start gap-2 shadow-xs cursor-pointer block"
                           title="Klik untuk membuka dokumen sanggahan di tab baru"
                         >
-                          <div className="p-1 rounded bg-blue-100 text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0 mt-0.5">
+                          <div className="p-1 rounded-lg bg-blue-100 text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0 mt-0.5">
                             <ExternalLink className="w-3.5 h-3.5" />
                           </div>
                           <div className="flex-1 min-w-0">
@@ -447,7 +453,7 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
                                 ? 'Tautan Google Drive (Buka Dokumen / Video)'
                                 : docSanggahanVal}
                             </span>
-                            <span className="text-[10px] text-slate-500 group-hover:text-blue-700 flex items-center gap-1 mt-0.5">
+                            <span className="text-[10px] text-slate-500 group-hover:text-blue-700 flex items-center gap-1 mt-0.5 font-medium">
                               <span>Klik untuk buka langsung di tab baru</span>
                               <ExternalLink className="w-2.5 h-2.5" />
                             </span>
@@ -458,9 +464,9 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
                         <button
                           type="button"
                           onClick={() => handleOpenVideo(docSanggahanVal, 'sanggahan')}
-                          className="text-[11px] text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 px-1 py-0.5"
+                          className="text-[11px] text-blue-600 hover:text-blue-800 hover:underline flex items-center gap-1 px-1 py-0.5 font-medium cursor-pointer"
                         >
-                          <Play className="w-3 h-3 fill-current" />
+                          <Play className="w-3 h-3 fill-current text-blue-600" />
                           <span>Buka opsi pemutar & salin tautan</span>
                         </button>
                       </div>
@@ -471,10 +477,10 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
                         onClick={() =>
                           handleOpenVideo(docSanggahanVal, docIsVideo ? 'unboxing' : 'sanggahan')
                         }
-                        className="w-full text-left p-2 rounded-md bg-white border border-blue-200 hover:border-blue-400 hover:bg-blue-50/80 transition-all group flex items-start gap-2 shadow-2xs cursor-pointer"
+                        className="w-full text-left p-2.5 rounded-xl bg-white border-2 border-blue-200 hover:border-blue-500 hover:bg-blue-50/80 transition-all group flex items-start gap-2 shadow-xs cursor-pointer"
                         title="Klik untuk membuka pemutar video / pencarian file di Drive"
                       >
-                        <div className="p-1 rounded bg-blue-100 text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0 mt-0.5">
+                        <div className="p-1 rounded-lg bg-blue-100 text-blue-700 group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0 mt-0.5">
                           {docIsVideo ? (
                             <Play className="w-3.5 h-3.5 fill-current" />
                           ) : (
@@ -485,7 +491,7 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
                           <span className="font-mono text-xs font-bold text-slate-800 group-hover:text-blue-700 break-all block">
                             {docSanggahanVal}
                           </span>
-                          <span className="text-[10px] text-blue-600 group-hover:underline flex items-center gap-1 mt-0.5">
+                          <span className="text-[10px] text-blue-600 group-hover:underline flex items-center gap-1 mt-0.5 font-medium">
                             <span>Klik untuk buka file / cari di Drive</span>
                             <ExternalLink className="w-2.5 h-2.5" />
                           </span>
@@ -503,41 +509,52 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
 
         {/* Section 3: Packing & Operator History */}
         <div>
-          <h4 className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2.5">
-            Riwayat Packing & Petugas
-          </h4>
+          <div className="flex items-center gap-2 mb-2.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-teal-500 shadow-xs shadow-teal-400" />
+            <h4 className="text-xs font-extrabold text-teal-950 uppercase tracking-wider">
+              Riwayat Packing & Petugas
+            </h4>
+          </div>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <User className="w-4 h-4 text-slate-400 shrink-0" />
-              <div>
-                <span className="text-slate-500 block text-[10px]">Nama Packer</span>
-                <span className="font-semibold text-slate-800">{record.namaPacker || '-'}</span>
+            <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-gradient-to-br from-blue-50 to-indigo-50/50 border border-blue-200/80 shadow-2xs">
+              <div className="p-1.5 rounded-lg bg-blue-100 text-blue-700 shrink-0">
+                <User className="w-4 h-4" />
               </div>
-            </div>
-
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <Printer className="w-4 h-4 text-slate-400 shrink-0" />
-              <div>
-                <span className="text-slate-500 block text-[10px]">Status Print</span>
-                <span className="font-semibold text-slate-800">{record.statusPrint || '-'}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <Clock className="w-4 h-4 text-slate-400 shrink-0" />
               <div className="overflow-hidden">
-                <span className="text-slate-500 block text-[10px]">Tgl & Jam Packing</span>
-                <span className="font-mono text-slate-800 font-medium truncate block">
+                <span className="text-slate-500 block text-[10px] font-medium">Nama Packer</span>
+                <span className="font-bold text-slate-800 truncate block">{record.namaPacker || '-'}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-gradient-to-br from-purple-50 to-violet-50/50 border border-purple-200/80 shadow-2xs">
+              <div className="p-1.5 rounded-lg bg-purple-100 text-purple-700 shrink-0">
+                <Printer className="w-4 h-4" />
+              </div>
+              <div className="overflow-hidden">
+                <span className="text-slate-500 block text-[10px] font-medium">Status Print</span>
+                <span className="font-bold text-slate-800 truncate block">{record.statusPrint || '-'}</span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-gradient-to-br from-amber-50 to-orange-50/50 border border-amber-200/80 shadow-2xs">
+              <div className="p-1.5 rounded-lg bg-amber-100 text-amber-700 shrink-0">
+                <Clock className="w-4 h-4" />
+              </div>
+              <div className="overflow-hidden">
+                <span className="text-slate-500 block text-[10px] font-medium">Tgl & Jam Packing</span>
+                <span className="font-mono text-slate-800 font-bold truncate block">
                   {record.tglJamPacking || '-'}
                 </span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 p-2 rounded-lg bg-slate-50 border border-slate-100">
-              <Calendar className="w-4 h-4 text-slate-400 shrink-0" />
-              <div>
-                <span className="text-slate-500 block text-[10px]">Tanggal Log / Masuk</span>
-                <span className="font-medium text-slate-800">{record.tanggal || '-'}</span>
+            <div className="flex items-center gap-2.5 p-2.5 rounded-xl bg-gradient-to-br from-emerald-50 to-teal-50/50 border border-emerald-200/80 shadow-2xs">
+              <div className="p-1.5 rounded-lg bg-emerald-100 text-emerald-700 shrink-0">
+                <Calendar className="w-4 h-4" />
+              </div>
+              <div className="overflow-hidden">
+                <span className="text-slate-500 block text-[10px] font-medium">Tanggal Log / Masuk</span>
+                <span className="font-bold text-slate-800 truncate block">{record.tanggal || '-'}</span>
               </div>
             </div>
           </div>
@@ -545,18 +562,20 @@ export const RecordDetailCard: React.FC<RecordDetailCardProps> = ({
 
         {/* Catatan Section (Read-Only / Tidak dapat diubah) */}
         {record.catatan ? (
-          <div className="p-3 bg-amber-50/70 border border-amber-200/80 rounded-lg text-xs text-amber-950 flex items-start gap-2.5 shadow-2xs">
-            <FileText className="w-4 h-4 text-amber-600 mt-0.5 shrink-0" />
+          <div className="p-3.5 bg-gradient-to-r from-amber-50 via-amber-100/60 to-orange-50 border-2 border-amber-300 rounded-xl text-xs text-amber-950 flex items-start gap-3 shadow-2xs">
+            <div className="p-1.5 rounded-lg bg-amber-500 text-white mt-0.5 shrink-0 shadow-xs">
+              <FileText className="w-4 h-4" />
+            </div>
             <div className="flex-1 min-w-0">
-              <span className="font-bold mr-1.5 text-amber-900">Catatan:</span>
-              <span className="font-medium text-amber-950">{record.catatan}</span>
+              <span className="font-extrabold mr-1.5 text-amber-950">Catatan Khusus:</span>
+              <span className="font-medium text-amber-950 leading-relaxed">{record.catatan}</span>
             </div>
           </div>
         ) : (
-          <div className="p-2.5 bg-slate-50 border border-slate-200/70 rounded-lg text-xs text-slate-500 flex items-center gap-2">
-            <FileText className="w-3.5 h-3.5 text-slate-400 shrink-0" />
-            <span className="font-medium text-slate-600">Catatan:</span>
-            <span className="italic text-slate-400 text-[11px]">- (Tidak ada catatan)</span>
+          <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-xl text-xs text-slate-500 flex items-center gap-2.5">
+            <FileText className="w-4 h-4 text-slate-400 shrink-0" />
+            <span className="font-semibold text-slate-600">Catatan:</span>
+            <span className="italic text-slate-400 text-[11px]">- (Tidak ada catatan khusus)</span>
           </div>
         )}
       </div>

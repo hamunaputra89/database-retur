@@ -135,22 +135,22 @@ export const VideoSanggahanModal: React.FC<VideoSanggahanModalProps> = ({
         className="bg-white w-full max-w-3xl rounded-2xl shadow-2xl border border-slate-200 overflow-hidden flex flex-col max-h-[92vh]"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div className="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+        {/* Header with Colorful Gradient */}
+        <div className="px-6 py-4 bg-gradient-to-r from-blue-700 via-indigo-700 to-violet-800 text-white flex items-center justify-between border-b border-indigo-600/50">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-xs text-white flex items-center justify-center shadow-md">
               <Film className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold tracking-tight text-white flex items-center gap-2">
+              <h3 className="text-base font-extrabold tracking-tight text-white flex items-center gap-2">
                 <span>{getTitle()}</span>
                 {rawFileName && (
-                  <span className="px-2 py-0.5 rounded text-[11px] font-mono bg-slate-800 text-blue-300 border border-slate-700">
+                  <span className="px-2 py-0.5 rounded-full text-[11px] font-mono font-bold bg-white/20 text-white border border-white/30">
                     MP4
                   </span>
                 )}
               </h3>
-              <p className="text-xs text-slate-400">
+              <p className="text-xs text-cyan-100/90 font-medium">
                 Bukti dokumentasi video sanggahan klaim resi retur
               </p>
             </div>
@@ -158,7 +158,7 @@ export const VideoSanggahanModal: React.FC<VideoSanggahanModalProps> = ({
           <button
             type="button"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-white/80 hover:text-white hover:bg-white/20 transition-colors cursor-pointer"
             title="Tutup Modal (Esc)"
           >
             <X className="w-5 h-5" />
